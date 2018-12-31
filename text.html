@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{background:#e1e1e1}
+    html,body{width:100%;height:100%}
+    *{margin:0;padding:0}
+    #container{height:40%;width:800px;margin:50px auto}
+    table {
+    font-family:"微软雅黑";
+    font-size:12px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    width:800px;
+    margin:auto;
+}
+    table th {
+     border-width: 1px;
+     padding: 8px;
+     border-style: solid;
+     border-color: #666666;
+    background-color: #dedede;
+  }
+  table td {
+      text-align: center;
+     border-width: 1px;
+    padding: 8px;
+     border-style: solid;
+     border-color: #666666;
+     background-color:#ffffff;
+ }
+    </style>
+</head>
+<body>
+  <table>
+      <thead>
+          <tr>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+          </tr>
+      </thead>
+      <tbody>
+         <tr>
+             <td>220</td>
+             <td>290</td>
+             <td>40</td>
+             <td>10</td>
+             <td>570</td>
+         </tr>
+      </tbody>
+  </table>
+  <div id="container"></div>  
+</body>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script>
+window.onload=function(){
+  var myChart = echarts.init(document.getElementById("container"));
+  opintion={
+    grid:{
+        left:0,
+        top:10,
+        right:0,
+        bottom:0,
+        containLabel:true,
+        show:true,
+        backgroundColor:'rgb(128, 128, 128)'
+    },
+    xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        axisLine:{
+            lineStyle:{
+                color:"#fff"
+            }
+        },
+        axisLabel:{
+            textStyle:{
+                color:function(value,index){
+                  return value == 'Mon' ? 'green' : 'red';
+                }
+            }
+           
+        }
+    },
+    yAxis: {
+        type: 'value',
+        axisLine:{
+            lineStyle:{
+                color:"#fff"
+            }
+        },
+        axisLabel:{
+            textStyle:{
+                color:function(value,index){
+                  return value >0 ? 'green' : 'red';
+                }
+            }
+           
+        }
+    },
+    series: [{
+        data:[220, 290, 40, 10, 570],
+        type: 'bar'
+    }]
+  }
+  myChart.setOption(opintion); 
+  arr=[[220, 290, 40, 10, 570],
+       [100, 100, 950, 80, 220],
+       [20, 180, 258, 90, 190],
+       [50, 800, 180, 170, 750]];
+ setInterval(getList,2000) ;
+ function getList(){
+     //Math.random()是0—1之间的小数，不包括0、1
+    var i=parseInt(Math.random()*arr.length);
+    var random=arr[i];
+    var str="";
+    opintion.series[0].data=random;
+    myChart.setOption(opintion);
+    for(var i=0;i<random.length;i++){
+        str+="<td>"+random[i]+"</td>"
+    }
+    document.getElementsByTagName("tbody")[0].innerHTML="<tr>"+str+"</tr>";
+
+
+  
+ }    
+}
+
+</script>
+</html>
